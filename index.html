@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=<device-width>, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css"></link>
+    <title>To-do App</title>
+</head>
+
+
+<script>
+
+    function showData() {
+        fetch("http://localhost:3000/todos", {
+            method: "GET"
+        }).then((result) => {
+            result.json().then((data) => {
+                for (var i=0; i<data.length; i++){
+                    var parentElement = document.getElementById("allTasksArea");
+                    var childElement = document.createElement("div");
+                    childElement.classList.add("task_created_box");
+
+                    var grandChildElement1 = document.createElement("span");
+                    grandChildElement1.innerHTML = data[i].title;
+                    grandChildElement1.classList.add("task_title");
+
+                    var grandChildElement2 = document.createElement("span");
+                    grandChildElement2.innerHTML = data[i].description;
+                    grandChildElement2.classList.add("task_description");
+
+                    var grandChildElement3 = document.createElement("button");
+                    grandChildElement3.innerHTML = "delete";
+                    grandChildElement3.classList.add("delete_button");
+                    grandChildElement3.setAttribute("onClick", "deleteTask("+ data[i].id +")");
+
+                    childElement.appendChild(document.createElement("br"));
+                    childElement.appendChild(grandChildElement1);
+                    childElement.appendChild(document.createElement("hr"));
+                    childElement.appendChild(document.createElement("br"));
+                    childElement.appendChild(grandChildElement2);
+                    childElement.appendChild(document.createElement("br"));
+                    childElement.appendChild(grandChildElement3);
+                    childElement.appendChild(document.createElement("br"));
+                    parentElement.appendChild(childElement);
+                }
+            });
+        });
+    };
+
+    showData();
+
+    function onPress() {
+        let title = document.getElementById("title").value;
+        let description = document.getElementById("description").value;
+
+        if (title == "") return alert("Enter a title");
+        if (description == "") return alert("Enter a description");
+
+        fetch("http://localhost:3000/todos", {
+            method: "POST",
+            body: JSON.stringify({
+                title: title,
+                description: description
+            }),
+            headers: {
+                "Content-Type": "application/json"
+            }
+        })
+        .then((result) => {
+            result.json().then((data) => {
+                console.log(data);
+            })
+        });
+    };
+
+    function deleteTask(id) {
+        fetch("http://localhost:3000/todos/"+id, {
+            method: "DELETE"
+        }).then((result)=>{
+            console.log(`task with id: ${id} has been deleted`);
+        });
+    }
+
+</script>
+
+
+<body>
+    <h1 style="font-family:Verdana, Geneva, Tahoma, sans-serif;">My To-do App</h1>
+    <div class = "new_task_box">
+        <p>Task Title</p>
+        <input type="text" id="title"></input>
+        <p>Task Description</p>
+        <input type="text" id="description"></input>
+        <button onClick="onPress()" class="button">Add To-do Task</button>
+    </div>
+    <h1 style="font-family:Verdana, Geneva, Tahoma, sans-serif;">Tasks List</h1>
+    <div id="allTasksArea" class="allTasks_box">
+<!-- All tasks will be shown here dynamically -->
+    </div>
+</body>
+</html>

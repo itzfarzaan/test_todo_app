@@ -1,0 +1,69 @@
+* {
+    
+    flex: auto;
+    font-family: 'Courier New', Courier, monospace;
+    text-decoration: none;
+}
+
+body{
+    background-color: #fff2cf;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.new_task_box{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: aliceblue;
+    padding: 80px;
+    border: 2px solid black;
+    box-shadow: 2px 2px red;
+}
+
+.button{
+    margin: 20px;
+}
+
+.allTasks_box{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.task_created_box{
+    background-color: wheat;
+    margin: 20px;
+    padding: 20px 20px 20px 20px;
+    border: 2px solid black;
+    min-width: 350px;
+    max-width: 350px;
+}
+
+.task_title{
+    display: block;
+    font-weight: bold;
+    margin-top: -25px;
+}
+
+.task_description{
+    display: block;
+    padding-bottom: 20px;
+    overflow: hidden;
+}
+
+.delete_button{
+    display: flex;
+    background-color: aliceblue;
+    align-self: center;    
+    justify-self: center;
+    padding: 10px;
+    cursor: pointer;
+}
+
+.delete_button:hover{
+    background-color: rgb(225, 241, 254);
+}
